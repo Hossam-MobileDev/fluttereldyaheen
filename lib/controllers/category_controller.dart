@@ -1,26 +1,31 @@
 
 import 'package:fluttereldyaheen/models/categories.dart';
 import 'package:get/get.dart';
-import '../service/api_service.dart';
+
+import '../data/repository/home_category_repo.dart';
 class CategoryController extends GetxController {
-  var isLoading = true.obs;
-  var categoryList = <Category>[].obs;
 
-  @override
-  void onInit() {
-    fetchCategories();
-    super.onInit();
-  }
+  final HomeCategoryRepo homeCategoryRepo;
 
-  void fetchCategories() async {
-    try {
-      isLoading(true);
-      var products = await ApiServices.fetchCategories();
-      if (products != null) {
-        categoryList.value = products;
-      }
-    } finally {
-      isLoading(false);
+  CategoryController({required this.homeCategoryRepo});
+
+  List<dynamic> _categoryHomeListList = [];
+
+  List<dynamic> get categoryHomeListList => _categoryHomeListList;
+
+  bool _isLoaded = false;
+  bool get isLoaded =>_isLoaded;
+  Future<void> getCategoryHome() async {
+    Response response = await homeCategoryRepo.getMainCategory();
+    if (response.statusCode == 200) {
+      print("got adds horizontal");
+      _categoryHomeListList=[];
+      _categoryHomeListList.addAll((response.body).map((x) => Category.fromJson(x)))
+      ;
+
+      print(_categoryHomeListList);
+      _isLoaded = true;
+      update();
     }
   }
 }

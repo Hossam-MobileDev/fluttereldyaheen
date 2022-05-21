@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttereldyaheen/routes/route_helper.dart';
 import 'package:fluttereldyaheen/screens/splash.dart';
 import 'package:fluttereldyaheen/screens/news_page.dart';
 import 'package:get/get.dart';
 
+import 'helper/dependencies.dart';
 import 'widgets/navigation_pages.dart';
 import 'screens/my_home.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIOverlays ([]);
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Color(0xFF745F48), // navigation bar color
-    statusBarColor: Color(0xFF745F48), // status bar color
-  ));
+  await init();
   runApp(const MyApp());
 }
 
@@ -26,7 +24,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Eldya7een Demo',
-      home:  NavigationPages(),
+     // home:  NavigationPages(),
+        initialRoute: RouteHelper.getSplashPage(),
+        getPages: RouteHelper.routes
     );
   }
 }

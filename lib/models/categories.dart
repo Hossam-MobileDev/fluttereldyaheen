@@ -54,8 +54,3 @@ class Category {
   }
 }
 
-List<Category> categoryFromJson(String str) =>
-    List<Category>.from(json.decode(str).map((x) => Category.fromJson(x)));
-
-String productToJson(List<Category> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));

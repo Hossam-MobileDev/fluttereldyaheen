@@ -6,8 +6,7 @@ import 'package:fluttereldyaheen/screens/news_page.dart';
 import 'package:get/get.dart';
 
 class CategoryList extends StatelessWidget {
-  CategoryController categoryController = Get.put(CategoryController());
-//var pages = [NewsScreen(),];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,22 +18,15 @@ class CategoryList extends StatelessWidget {
           fit: BoxFit.fill,
         ),
       ),
-      child: Obx(() {
-       return
-        ListView.builder(
+      child: GetBuilder<CategoryController>(builder: (categorycontroller){
+       return ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: categoryController.categoryList.length,
+          itemCount: categorycontroller.categoryHomeListList.length,
           itemBuilder: (context, position) {
             return GestureDetector(
               onTap: () {
-                if(position==1){
-                  Get.to(NewsPage(),
-                      arguments: categoryController.categoryList[position].title,
-                        );
 
-                }
-                else return null;
               } ,
 
               child: Stack(
@@ -53,9 +45,8 @@ class CategoryList extends StatelessWidget {
                           fit: BoxFit.fill,
                         ),
                       )),
-                  Text(
-                    categoryController.categoryList[position].title!,
-                    style: TextStyle(
+                  Text( categorycontroller.categoryHomeListList[position].title!
+                   , style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
@@ -65,8 +56,11 @@ class CategoryList extends StatelessWidget {
             );
           },
         );
+        })
 
-      }),
-    );
+        );
+
+
+
   }
 }
